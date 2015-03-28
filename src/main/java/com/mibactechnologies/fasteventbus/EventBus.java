@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 public class EventBus {
     private final Map<Class<? extends Event>, Collection<EventHandlerAnnotation>> bindings;
@@ -29,6 +32,31 @@ public class EventBus {
     }
 
     public <T extends Event> T callEvent(final T event) {
+	final FutureTask<T> task = new FutureTask<T>(() -> fireEvent(event));
+
+	final ExecutorService es = Executors.newFixedThreadPool(1);
+
+	es.execute(task);
+
+	try {
+	    return task.get();
+	} catch (final Exception e) {
+	    e.printStackTrace();
+	    return null;
+	}
+    }
+
+    public void clearListeners() {
+	bindings.clear();
+	registeredListeners.clear();
+    }
+
+    private EventHandlerAnnotation createEventHandler(final Listener listener,
+	    final Method method, final EventHandler annotation) {
+	return new EventHandlerAnnotation(listener, method, annotation);
+    }
+
+    private <T extends Event> T fireEvent(final T event) {
 	final Collection<EventHandlerAnnotation> handlers = bindings.get(event
 		.getClass());
 
@@ -57,16 +85,6 @@ public class EventBus {
 	}
 
 	return event;
-    }
-
-    public void clearListeners() {
-	bindings.clear();
-	registeredListeners.clear();
-    }
-
-    private EventHandlerAnnotation createEventHandler(final Listener listener,
-	    final Method method, final EventHandler annotation) {
-	return new EventHandlerAnnotation(listener, method, annotation);
     }
 
     public Map<Class<? extends Event>, Collection<EventHandlerAnnotation>> getBindings() {
@@ -119,8 +137,8 @@ public class EventBus {
 	    if (!method.getReturnType().equals(void.class)) {
 		if (debug)
 		    System.out
-		    .println("Ignoring method due to non-void return: "
-			    + method.getName());
+			    .println("Ignoring method due to non-void return: "
+				    + method.getName());
 		continue;
 	    }
 
