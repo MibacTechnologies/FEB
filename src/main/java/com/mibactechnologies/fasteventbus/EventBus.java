@@ -9,8 +9,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 public class EventBus {
@@ -31,15 +32,13 @@ public class EventBus {
 	return EventBus.DEFAULT;
     }
 
-    public <T extends Event> T callEvent(final T event) {
+    public <T extends Event> T callEvent(final T event)
+	    throws InterruptedException, ExecutionException {
 	final FutureTask<T> task = new FutureTask<T>(() -> fireEvent(event));
 
-	final ExecutorService es = Executors.newFixedThreadPool(1);
-
-	es.execute(task);
-
+	final Future<?> es = Executors.newSingleThreadExecutor().submit(task);
 	try {
-	    return task.get();
+	    return (T) es.get();
 	} catch (final Exception e) {
 	    e.printStackTrace();
 	    return null;
@@ -137,8 +136,8 @@ public class EventBus {
 	    if (!method.getReturnType().equals(void.class)) {
 		if (debug)
 		    System.out
-			    .println("Ignoring method due to non-void return: "
-				    + method.getName());
+		    .println("Ignoring method due to non-void return: "
+			    + method.getName());
 		continue;
 	    }
 
