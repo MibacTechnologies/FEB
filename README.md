@@ -60,7 +60,7 @@ For now, with none other buses.
 	</tr>	
     <tr>
         <th>Asynchronous event delivery</th>
-        <td>Yes</td>
+        <th>Yes</th>
     </tr>
 	<tr>
 		<th>Cancellable events</th>
@@ -68,6 +68,6 @@ For now, with none other buses.
 	</tr>	
     <tr>
         <th>Receiving priorities</th>
-        <td>Yes (enum)</td>
+        <th>Yes (enum)</th>
     </tr>
 </table>
