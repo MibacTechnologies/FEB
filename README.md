@@ -51,8 +51,6 @@ For now, with none other buses.
 
 <table>
 	<tr>
-		<th>Comparison</th>
-	<tr>
 		<th></th>
 		<th>Fast Event Bus</th>
 	</tr>
@@ -63,5 +61,13 @@ For now, with none other buses.
     <tr>
         <th>Asynchronous event delivery</th>
         <td>Yes</td>
+    </tr>
+	<tr>
+		<th>Cancellable events</th>
+		<th>Yes</th>
+	</tr>	
+    <tr>
+        <th>Receiving priorities</th>
+        <td>Yes (enum)</td>
     </tr>
 </table>
