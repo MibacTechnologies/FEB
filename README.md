@@ -56,18 +56,18 @@ For now, with none other buses.
 	</tr>
 	<tr>
 		<th>Event handling methods</th>
-		<th>Annotations</th>
+		<td>Annotations</td>
 	</tr>	
     <tr>
         <th>Asynchronous event delivery</th>
-        <th>Yes</th>
+        <td>Yes</td>
     </tr>
 	<tr>
 		<th>Cancellable events</th>
-		<th>Yes</th>
+		<td>Yes</td>
 	</tr>	
     <tr>
         <th>Receiving priorities</th>
-        <th>Yes (enum)</th>
+        <td>Yes (enum)</td>
     </tr>
 </table>
