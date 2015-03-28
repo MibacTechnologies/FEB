@@ -14,6 +14,10 @@ class EventHandlerAnnotation implements Comparable<EventHandlerAnnotation> {
 	this.annotation = annotation;
     }
 
+    public boolean allowChilds() {
+	return annotation.allowChilds();
+    }
+
     @Override
     public int compareTo(final EventHandlerAnnotation other) {
 	final int diff = annotation.priority().getIndex()

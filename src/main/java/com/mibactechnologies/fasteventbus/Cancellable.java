@@ -3,7 +3,7 @@ package com.mibactechnologies.fasteventbus;
 /**
  * Interface made for creating cancellable events - they can be cancelled (it's
  * better to implement if your event is cancellable, otherwise it [system
- * (exactly {@link EventExecutor EventExecutor})] won't support
+ * (exactly {@link EventBus EventExecutor})] won't support
  * <code>@EventHandler(ignoreCancelled)</code>)
  */
 public interface Cancellable {

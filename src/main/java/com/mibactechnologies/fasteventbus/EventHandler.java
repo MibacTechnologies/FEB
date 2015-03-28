@@ -15,7 +15,23 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface EventHandler {
+    /**
+     * If handler should receive child events, set to true
+     */
+    boolean allowChilds() default false;
+
+    /**
+     * If handler should receive cancelled events, set to true
+     */
     boolean ignoreCancelled() default false;
 
+    /**
+     * Priority of event receiving<br>
+     * <br>
+     * ({@link EventPriority#LOWEST lowest} >> {@link EventPriority#LOW low} >>
+     * {@link EventPriority#NORMAL normal} >> {@link EventPriority#HIGH high} >>
+     * {@link EventPriority#HIGHEST highest} >> {@link EventPriority#MONITOR
+     * monitor})
+     */
     EventPriority priority() default EventPriority.NORMAL;
 }

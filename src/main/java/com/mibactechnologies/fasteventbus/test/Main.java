@@ -1,14 +1,14 @@
 package com.mibactechnologies.fasteventbus.test;
 
-import com.mibactechnologies.fasteventbus.EventExecutor;
+import com.mibactechnologies.fasteventbus.EventBus;
 import com.mibactechnologies.fasteventbus.Listener;
 
 public class Main implements Listener {
-    private static EventExecutor eventExec;
+    private static EventBus eventExec;
 
     public Main() {
 	final long totalStart = System.nanoTime();
-	Main.eventExec = new EventExecutor();
+	Main.eventExec = new EventBus();
 	// Main.eventExec.setDebug(true);
 	Main.eventExec.registerListener(this);
 	Main.eventExec.registerListener(new listener1());

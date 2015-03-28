@@ -10,20 +10,41 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class EventExecutor {
+public class EventBus {
     private final Map<Class<? extends Event>, Collection<EventHandlerAnnotation>> bindings;
     private final Set<Listener> registeredListeners;
+    private static final EventBus DEFAULT = new EventBus();
 
     private boolean debug = false;
 
     private static final EventHandlerAnnotation[] EMPTYHANDLERS = {};
 
-    public EventExecutor() {
+    public EventBus() {
 	bindings = new HashMap<Class<? extends Event>, Collection<EventHandlerAnnotation>>();
 	registeredListeners = new HashSet<Listener>();
     }
 
-    public <T extends Event> T callEvent(final T event) {
+    public static EventBus getDefault() {
+	return EventBus.DEFAULT;
+    }
+
+    public synchronized void callEvent(final Event event) {
+	synchronized (this) {
+	    fireEvent(event);
+	}
+    }
+
+    public void clearListeners() {
+	bindings.clear();
+	registeredListeners.clear();
+    }
+
+    private EventHandlerAnnotation createEventHandler(final Listener listener,
+	    final Method method, final EventHandler annotation) {
+	return new EventHandlerAnnotation(listener, method, annotation);
+    }
+
+    private void fireEvent(final Event event) {
 	final Collection<EventHandlerAnnotation> handlers = bindings.get(event
 		.getClass());
 
@@ -31,7 +52,7 @@ public class EventExecutor {
 	    if (debug)
 		System.out.println("Event " + event.getClass().getSimpleName()
 			+ " has no handlers.");
-	    return event;
+	    return;
 	}
 
 	if (debug)
@@ -51,17 +72,7 @@ public class EventExecutor {
 		handler.execute(event);
 	}
 
-	return event;
-    }
-
-    public void clearListeners() {
-	bindings.clear();
-	registeredListeners.clear();
-    }
-
-    private EventHandlerAnnotation createEventHandler(final Listener listener,
-	    final Method method, final EventHandler annotation) {
-	return new EventHandlerAnnotation(listener, method, annotation);
+	return;
     }
 
     public Map<Class<? extends Event>, Collection<EventHandlerAnnotation>> getBindings() {
@@ -73,7 +84,7 @@ public class EventExecutor {
 	    final Class<? extends Event> clazz) {
 	final Collection<EventHandlerAnnotation> handlers = bindings.get(clazz);
 	if (handlers == null || handlers.isEmpty())
-	    return EventExecutor.EMPTYHANDLERS; // No handlers so we return an
+	    return EventBus.EMPTYHANDLERS; // No handlers so we return an
 	// empty list
 	return handlers.toArray(new EventHandlerAnnotation[handlers.size()]);
     }
