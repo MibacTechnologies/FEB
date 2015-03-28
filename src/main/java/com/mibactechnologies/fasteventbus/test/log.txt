@@ -1,0 +1,24 @@
+--- log from console in debug mode ---
+Register event listener: com.mibactechnologies.java.system.event.test.Main@1db9742
+Register event listener: com.mibactechnologies.java.system.event.test.listener1@52e922
+Add listener method: CustomEventTest1 for event CustomEvent
+Register event listener: com.mibactechnologies.java.system.event.test.listener2@16f6e28
+Add listener method: CustomEventTest1 for event CustomEvent
+Register event listener: com.mibactechnologies.java.system.event.test.listener3@1ee12a7
+Add listener method: onCustomEvent2 for event CustomEvent2
+Event CustomEvent has 2 handlers.
+2147483647<-- strangeity : bool -->true
+false!
+Run time (ms): 1.056486
+Total run time (ms): 40.0852648
+
+Statistics (log 2) - 100 000 cycles:
+Max time: 23.3006259 [ms]
+Min time: 0.0575 [ms]
+Avg time: 0.09166803172 [ms]
+
+Log #3:
+com.mibactechnologies.java.system.event.test.CustomEvent{cancelled=false, strangeity=2147483647, longName=false, name="testEvent"}
+Run time (event calling): 2.370901 [ms]
+Total run time: 32.2987742 [ms]
+toString method took 0.3304 [ms]
