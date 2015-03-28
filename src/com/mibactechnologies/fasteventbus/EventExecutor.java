@@ -114,8 +114,8 @@ public class EventExecutor {
 	    if (!method.getReturnType().equals(void.class)) {
 		if (debug)
 		    System.out
-		    .println("Ignoring method due to non-void return: "
-			    + method.getName());
+			    .println("Ignoring method due to non-void return: "
+				    + method.getName());
 		continue;
 	    }
 
