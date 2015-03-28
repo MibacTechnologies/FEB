@@ -47,21 +47,21 @@ Additional features and notes
 
 Comparison
 ----------
+For now, with none other buses.
 
 <table>
 	<tr>
+		<th>Comparison</th>
+	<tr>
 		<th></th>
 		<th>Fast Event Bus</th>
-		<th>?</th>
 	</tr>
 	<tr>
 		<th>Event handling methods</th>
 		<th>Annotations</th>
-		<th></th>
 	</tr>	
     <tr>
-        <th>Aynchronous event delivery</th>
+        <th>Asynchronous event delivery</th>
         <td>Yes</td>
-        <td></td>
     </tr>
 </table>
