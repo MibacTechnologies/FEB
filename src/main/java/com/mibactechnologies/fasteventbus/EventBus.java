@@ -28,23 +28,7 @@ public class EventBus {
 	return EventBus.DEFAULT;
     }
 
-    public synchronized void callEvent(final Event event) {
-	synchronized (this) {
-	    fireEvent(event);
-	}
-    }
-
-    public void clearListeners() {
-	bindings.clear();
-	registeredListeners.clear();
-    }
-
-    private EventHandlerAnnotation createEventHandler(final Listener listener,
-	    final Method method, final EventHandler annotation) {
-	return new EventHandlerAnnotation(listener, method, annotation);
-    }
-
-    private void fireEvent(final Event event) {
+    public <T extends Event> T callEvent(final T event) {
 	final Collection<EventHandlerAnnotation> handlers = bindings.get(event
 		.getClass());
 
@@ -52,7 +36,7 @@ public class EventBus {
 	    if (debug)
 		System.out.println("Event " + event.getClass().getSimpleName()
 			+ " has no handlers.");
-	    return;
+	    return event;
 	}
 
 	if (debug)
@@ -72,7 +56,17 @@ public class EventBus {
 		handler.execute(event);
 	}
 
-	return;
+	return event;
+    }
+
+    public void clearListeners() {
+	bindings.clear();
+	registeredListeners.clear();
+    }
+
+    private EventHandlerAnnotation createEventHandler(final Listener listener,
+	    final Method method, final EventHandler annotation) {
+	return new EventHandlerAnnotation(listener, method, annotation);
     }
 
     public Map<Class<? extends Event>, Collection<EventHandlerAnnotation>> getBindings() {
@@ -125,8 +119,8 @@ public class EventBus {
 	    if (!method.getReturnType().equals(void.class)) {
 		if (debug)
 		    System.out
-			    .println("Ignoring method due to non-void return: "
-				    + method.getName());
+		    .println("Ignoring method due to non-void return: "
+			    + method.getName());
 		continue;
 	    }
 

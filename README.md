@@ -44,3 +44,24 @@ Additional features and notes
 * **Convenience singleton:** You can get a process wide event bus instance by calling EventBus.getDefault(). You can still call new EventBus() to create any number of local busses.
 * **Cancellable events:** This event bus is different! You can **cancel events**!
 * **Receiving priorities:** You can decide when you want to invoke your listener.
+
+Comparison
+----------
+
+<table>
+	<tr>
+		<th></th>
+		<th>Fast Event Bus</th>
+		<th>?</th>
+	</tr>
+	<tr>
+		<th>Event handling methods</th>
+		<th>Annotations</th>
+		<th></th>
+	</tr>	
+    <tr>
+        <th>Aynchronous event delivery</th>
+        <td>Yes</td>
+        <td></td>
+    </tr>
+</table>
