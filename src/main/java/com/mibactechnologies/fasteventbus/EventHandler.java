@@ -16,7 +16,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface EventHandler {
     /**
+     * -- work in progress --<br>
+     * <br>
      * If handler should receive child events, set to true
+     * 
      */
     boolean allowChilds() default false;
 

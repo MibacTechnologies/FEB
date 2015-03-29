@@ -43,7 +43,7 @@ Additional features and notes
 * **Performance optimized:** It's one of the fastest event buses.
 * **Convenience singleton:** You can get a process wide event bus instance by calling EventBus.getDefault(). You can still call new EventBus() to create any number of local busses.
 * **Cancellable events:** This event bus is different! You can **cancel events**!
-* **Receiving priorities:** You can decide when you want to invoke your listener.
+* **Receiving priorities:** You decide when your listener is invoked.
 
 Comparison
 ----------
@@ -52,22 +52,27 @@ For now, with none other buses.
 <table>
 	<tr>
 		<th></th>
-		<th>Fast Event Bus</th>
+		<th>FastEventBus 1.1</th>
+		<th>FastEventBus 1.0</th>
 	</tr>
 	<tr>
 		<th>Event handling methods</th>
+		<td>Annotations</td>
 		<td>Annotations</td>
 	</tr>	
     <tr>
         <th>Asynchronous event delivery</th>
         <td>Yes</td>
+        <td>No</td>
     </tr>
 	<tr>
 		<th>Cancellable events</th>
 		<td>Yes</td>
+		<td>Yes</td>
 	</tr>	
     <tr>
         <th>Receiving priorities</th>
+        <td>Yes (enum)</td>
         <td>Yes (enum)</td>
     </tr>
 </table>

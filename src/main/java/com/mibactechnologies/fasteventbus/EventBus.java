@@ -36,7 +36,7 @@ public class EventBus {
 
 	@SuppressWarnings("unchecked")
 	final Future<T> es = (Future<T>) Executors.newSingleThreadExecutor()
-		.submit(task);
+	.submit(task);
 	try {
 	    return es.get();
 	} catch (final Exception e) {
@@ -56,7 +56,7 @@ public class EventBus {
     }
 
     private <T extends Event> T fireEvent(final T event) {
-	final Collection<EventHandlerAnnotation> handlers = bindings.get(event
+	final EventHandlerAnnotation[] handlers = getListenersFor(event
 		.getClass());
 
 	if (handlers == null) {
@@ -68,7 +68,7 @@ public class EventBus {
 
 	if (debug)
 	    System.out.println("Event " + event.getClass().getSimpleName()
-		    + " has " + handlers.size() + " handlers.");
+		    + " has " + handlers.length + " handlers.");
 
 	final boolean cancellable = event instanceof Cancellable;
 	boolean cancelled = cancellable ? ((Cancellable) event).isCancelled()
@@ -95,8 +95,8 @@ public class EventBus {
 	    final Class<? extends Event> clazz) {
 	final Collection<EventHandlerAnnotation> handlers = bindings.get(clazz);
 	if (handlers == null || handlers.isEmpty())
-	    return EventBus.EMPTYHANDLERS; // No handlers so we return an
-	// empty list
+	    return EventBus.EMPTYHANDLERS;
+
 	return handlers.toArray(new EventHandlerAnnotation[handlers.size()]);
     }
 
@@ -136,8 +136,8 @@ public class EventBus {
 	    if (!method.getReturnType().equals(void.class)) {
 		if (debug)
 		    System.out
-		    .println("Ignoring method due to non-void return: "
-			    + method.getName());
+			    .println("Ignoring method due to non-void return: "
+				    + method.getName());
 		continue;
 	    }
 
