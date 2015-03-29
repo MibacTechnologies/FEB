@@ -1,6 +1,6 @@
 #FEB (Fast Event Bus)
 
-[![Codeship Status for MibacTechnologies/FEB](https://img.shields.io/codeship/9845fa70-b6f8-0132-291f-76108d3aca64/1.1.svg?style=flat-square)](https://codeship.com/projects/71199) [![Coverage Status](https://coveralls.io/repos/MibacTechnologies/FEB/badge.svg)](https://coveralls.io/r/MibacTechnologies/FEB)
+[![Codeship Status for MibacTechnologies/FEB](https://img.shields.io/codeship/9845fa70-b6f8-0132-291f-76108d3aca64/1.1.svg?style=flat-square)](https://codeship.com/projects/71199)[![Coverage Status](https://img.shields.io/coveralls/MibacTechnologies/FEB/1.1.svg?style=flat-square)](https://coveralls.io/r/MibacTechnologies/FEB)
 
 FEB...
 
