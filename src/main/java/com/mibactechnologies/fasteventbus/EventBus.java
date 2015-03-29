@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
@@ -32,13 +31,14 @@ public class EventBus {
 	return EventBus.DEFAULT;
     }
 
-    public <T extends Event> T callEvent(final T event)
-	    throws InterruptedException, ExecutionException {
+    public <T extends Event> T callEvent(final T event) {
 	final FutureTask<T> task = new FutureTask<T>(() -> fireEvent(event));
 
-	final Future<?> es = Executors.newSingleThreadExecutor().submit(task);
+	@SuppressWarnings("unchecked")
+	final Future<T> es = (Future<T>) Executors.newSingleThreadExecutor()
+		.submit(task);
 	try {
-	    return (T) es.get();
+	    return es.get();
 	} catch (final Exception e) {
 	    e.printStackTrace();
 	    return null;
