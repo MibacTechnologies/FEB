@@ -1,6 +1,6 @@
 #FEB (Fast Event Bus)
 
-[![Codeship Status for MibacTechnologies/FEB](https://codeship.com/projects/9845fa70-b6f8-0132-291f-76108d3aca64/status?branch=1.1)](https://codeship.com/projects/71199)
+[![Codeship Status for MibacTechnologies/FEB](https://codeship.com/projects/9845fa70-b6f8-0132-291f-76108d3aca64/status?branch=1.1)](https://codeship.com/projects/71199) 
 
 FEB...
 
