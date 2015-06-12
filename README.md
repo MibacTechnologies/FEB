@@ -75,4 +75,9 @@ For now, with none other buses.
         <td>Yes (enum)</td>
         <td>Yes (enum)</td>
     </tr>
+    <tr>
+        <th>Default eventbus</th>
+        <td>No</td>
+        <td>Yes</td>
+    </th>
 </table>
