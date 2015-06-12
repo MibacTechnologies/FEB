@@ -14,7 +14,7 @@ How to use ?
 ------------
 ###1. Define events:
 ```java
-public class ExampleEvent {
+public class ExampleEvent extends Event {
 	/* additional fields if needed */
 }
 ```
@@ -22,19 +22,19 @@ public class ExampleEvent {
 ###2. Prepare listeners:
 ```java
 // constructor (or any method)
-EventExecutor eventExecutor = new EventExecutor( );
-eventExecutor.registerListener( this );
+EventBus eventbus = new EventBus( ); // or EventBus.getDefault()
+eventbus.registerListener( this );
 
 // another method
 @EventHandler
-public void IReceiveEvents( ExampleEvent event ) {
+public void receiveEvent( ExampleEvent event ) {
 	/* do something */
 }
 ```
 
 ###3. Call events:
 ```java
-eventExecutor.callEvent( new ExampleEvent( ) );
+eventbus.callEvent( new ExampleEvent( ) );
 ```
 
 Additional features and notes
