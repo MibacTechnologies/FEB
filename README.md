@@ -77,7 +77,7 @@ For now, with none other buses.
     </tr>
     <tr>
         <th>Default eventbus</th>
-        <td>No</td>
         <td>Yes</td>
+        <td>No</td>
     </th>
 </table>
