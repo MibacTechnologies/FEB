@@ -1,43 +1,65 @@
 package com.mibactechnologies.fasteventbus;
 
-public class EventBusTest implements Listener {
-    private final EventBus eventbus;
+import java.security.InvalidParameterException;
 
-    public EventBusTest() {
-	eventbus = new EventBus();
-    }
+import junit.framework.TestCase;
 
-    @EventHandler
-    public void eventListener(final Event e) {
-	e.getEventName();
-	e.toString();
-    }
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.Timeout;
+import org.junit.runners.Parameterized.Parameter;
 
-    public void testCallEvent() {
-	eventbus.callEvent(new Event());
-    }
+public class EventBusTest extends TestCase implements Listener {
+	@Rule
+	public Timeout		globalTimeout	= new Timeout( 10 * 1000 );
+	private EventBus	eventbus;
+	private long		eventReceived;
 
-    public void testCallEvent2() {
-	eventbus.registerListener(this);
-	eventbus.callEvent(new Event());
-	eventbus.removeListener(this);
-    }
+	@Before
+	public void setUp( ) {
+		eventbus = new EventBus( );
+	}
 
-    public void testClearListeners() {
-	eventbus.clearListeners();
-    }
+	@EventHandler
+	public void eventListener( final Event e ) {
+		eventReceived = System.nanoTime( );
+	}
 
-    public void testClearListeners2() {
-	eventbus.registerListener(this);
-	eventbus.clearListeners();
-    }
+	@Test
+	public void testNullEventCall( ) {
+		try {
+			eventbus.callEvent( null );
+			fail( "Expected InvalidParameterException to be thrown" );
+		} catch ( InvalidParameterException e ) {}
+	}
 
-    public void testDefault() {
-	EventBus.getDefault();
-    }
+	@Test
+	public void testCallEvent( ) {
+		eventbus.registerListener( this );
+		assertTrue( "registerListener didn't work as expected", eventbus
+				.getRegisteredListeners( ).contains( this ) );
 
-    public void testRegisterUnregister() {
-	eventbus.registerListener(this);
-	eventbus.removeListener(this);
-    }
+		assertNotNull( "callEvent returned null when it shouldn't",
+				eventbus.callEvent( new Event( ) ) );
+
+		System.out.println( "Event call took "
+				+ ( System.nanoTime( ) - eventReceived ) + " ns" );
+
+		eventbus.removeListener( this );
+		assertFalse( "removeListener didn't work as expected", eventbus
+				.getRegisteredListeners( ).contains( this ) );
+	}
+
+	@Test
+	public void testListenersMethods( ) {
+		eventbus.registerListener( this );
+		eventbus.clearListeners( );
+		assertTrue( eventbus.getRegisteredListeners( ).isEmpty( ) );
+	}
+
+	@Test
+	public void testDefault( ) {
+		assertNotNull( "Default EventBus is null", EventBus.getDefault( ) );
+	}
 }
