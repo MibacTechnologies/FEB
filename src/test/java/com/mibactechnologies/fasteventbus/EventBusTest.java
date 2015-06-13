@@ -97,7 +97,8 @@ public class EventBusTest extends TestCase implements Listener {
 		System.out.println( "Event call took "
 				+ ( System.nanoTime( ) - eventReceived ) + " ns" );
 
-		assertFalse( received.contains( -1 ) );
+		assertFalse( "Handler invoked when shouldn't be",
+				received.contains( -1 ) );
 
 		eventbus.removeListener( this );
 		assertFalse( "removeListener didn't work as expected", eventbus
