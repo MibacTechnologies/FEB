@@ -119,6 +119,11 @@ public class EventBusTest extends TestCase implements Listener {
 	}
 
 	@Test
+	public void testEventToString( ) {
+		assertNotNull( new Event( ).toString( ) );
+	}
+
+	@Test
 	public void testDefault( ) {
 		assertNotNull( "Default EventBus is null", EventBus.getDefault( ) );
 	}
