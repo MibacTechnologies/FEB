@@ -1,7 +1,6 @@
 package com.mibactechnologies.fasteventbus;
 
 import java.lang.reflect.Method;
-import java.security.InvalidParameterException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,13 +11,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class EventBus {
+	private static final EventBus														DEFAULT			= new EventBus( );
+	private static final EventHandlerAnnotation[ ]										EMPTYHANDLERS	= { };
+
 	private final Map< Class< ? extends Event >, Collection< EventHandlerAnnotation >>	bindings;
 	private final Set< Listener >														registeredListeners;
-	private static final EventBus														DEFAULT			= new EventBus( );
 
 	private boolean																		debug			= false;
-
-	private static final EventHandlerAnnotation[ ]										EMPTYHANDLERS	= { };
 
 	class EventCall< T extends Event > implements Runnable {
 		private T	event;
@@ -49,7 +48,7 @@ public class EventBus {
 
 	public < T extends Event > T callEvent( final T event ) {
 		if ( event == null )
-			throw new InvalidParameterException( "Event is null" );
+			throw new IllegalArgumentException( "Event is null" );
 
 		EventCall< T > call = new EventCall< T >( event );
 		call.run( );
@@ -84,12 +83,10 @@ public class EventBus {
 					+ " has " + handlers.length + " handlers." );
 
 		final boolean cancellable = event instanceof Cancellable;
-		boolean cancelled = cancellable ? ( ( Cancellable ) event )
-				.isCancelled( ) : false;
 
 		for ( final EventHandlerAnnotation handler : handlers ) {
-			cancelled = cancellable ? ( ( Cancellable ) event ).isCancelled( )
-					: false;
+			boolean cancelled = cancellable ? ( ( Cancellable ) event )
+					.isCancelled( ) : false;
 
 			if ( !cancelled || cancelled
 					&& handler.getAnnotation( ).ignoreCancelled( ) )
@@ -123,8 +120,11 @@ public class EventBus {
 		if ( debug )
 			System.out.println( "Register event listener: " + listener );
 
-		if ( registeredListeners.contains( listener ) ) { throw new InvalidParameterException(
-				"Listener already registered" ); }
+		if ( registeredListeners.contains( listener ) )
+			throw new IllegalArgumentException( "Listener already registered" );
+
+		if ( listener == null )
+			throw new IllegalArgumentException( "Null can't be registered" );
 
 		registeredListeners.add( listener );
 
@@ -155,7 +155,7 @@ public class EventBus {
 
 			if ( Event.class.isAssignableFrom( param ) ) {
 				@SuppressWarnings( "unchecked" )
-				// Java just doesn't understand that this actually is a safe
+				// Java doesn't understand that this actually is a safe
 				// cast because of the above if-statement
 				final Class< ? extends Event > realParam = ( Class< ? extends Event > ) param;
 
@@ -187,7 +187,7 @@ public class EventBus {
 		registeredListeners.remove( listener );
 	}
 
-	public void setDebug( final boolean debug ) {
+	protected void setDebug( final boolean debug ) {
 		this.debug = debug;
 	}
 }
