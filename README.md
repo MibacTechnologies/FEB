@@ -41,7 +41,7 @@ Additional features and notes
 ------------------------------
 * **Based on annotations:** No need to overload methods but if you want - you can.
 * **Performance optimized:** It's one of the fastest event buses.
-* **Convenience singleton:** You can get a process wide event bus instance by calling EventBus.getDefault(). You can still call ```new EventBus()``` to create any number of local busses.
+* **Convenience singleton:** You can get a process wide event bus instance by calling ```EventBus.getDefault()```. You can still call ```new EventBus()``` to create any number of local busses.
 * **Cancellable events:** This event bus is different! You can **cancel events**!
 * **Receiving priorities:** You decide when your listener is invoked.
 
