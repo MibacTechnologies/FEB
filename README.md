@@ -39,7 +39,7 @@ eventbus.callEvent( new ExampleEvent( ) );
 
 Additional features and notes
 ------------------------------
-* **Based on annotations:** No need to overload methods. ######but if you want you still can
+* **Based on annotations:** No need to overload methods. <h6>but if you want you still can</h6>
 * **Performance optimized:** It's one of the fastest event buses.
 * **Convenience singleton:** You can get a process wide event bus instance by calling EventBus.getDefault(). You can still call new EventBus() to create any number of local busses.
 * **Cancellable events:** This event bus is different! You can **cancel events**!
